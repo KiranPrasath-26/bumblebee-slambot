@@ -1,0 +1,11 @@
+<launch>
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint_ekf_broadcaster"
+            args="0 0 0.103 1 0 0 0 base_footprint_ekf imu_link_ekf 100"/>
+    
+    <node pkg="bumblebee_localisation" type="imu_republisher_node.py" name="imu_republisher_node"
+            output="screen" respawn="true"/>
+
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_node" clear_params="true">
+        <rosparam file="$(find bumblebee_localisation)/config/ekf.yaml" command="load"></rosparam>
+    </node>
+</launch>
